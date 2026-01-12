@@ -1,0 +1,42 @@
+Protokolorienteret datamodel
+
+Pythons datamodel er protokolorienteret, fordi sproget ikke spørger “hvad er du?”, men “hvad kan du?”
+At Pythons datamodel er protokolorienteret betyder, at adfærd bestemmes af hvilke metoder et objekt implementerer – ikke af hvilken klasse det nedarver fra.
+
+Med andre ord:
+“Hvis det går som en and og rapper som en and, så er det en and” (duck typing).
+
+Hvad er en protokol i Python?
+En protokol er et uformelt sæt metoder, som Python forventer findes for at noget “virker” i en bestemt sammenhæng.
+
+
+| Protokol           | Krævede metoder         | Brug           |
+| ------------------ | ----------------------- | -------------- |
+| Iterationsprotokol | `__iter__`, `__next__`  | `for x in obj` |
+| Længdeprotokol     | `__len__`               | `len(obj)`     |
+| Containerprotokol  | `__contains__`          | `x in obj`     |
+| Numerisk protokol  | `__add__`, `__mul__`, … | `+`, `*`       |
+| Context manager    | `__enter__`, `__exit__` | `with`         |
+
+
+Sammenligning: klassisk OOP vs protokolorienteret
+Klassisk (fx Java):
+
+class MyList implements Iterable {
+    ...
+}
+
+Her skal du:
+- erklære et interface
+- implementere det eksplicit
+
+Python:
+class MyList:
+    def __iter__(self):
+        ...
+
+Her:
+- ingen deklaration
+- ingen interface
+- kun metoder
+Python tjekker adfærd ved brug, ikke ved definition.

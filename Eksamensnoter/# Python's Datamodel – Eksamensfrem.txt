@@ -1,0 +1,190 @@
+# Python's Datamodel – Eksamensfremlæggelse
+
+## Introduktion til Python’s datamodel
+
+Python’s datamodel er protokolorierenteret, det vil sige, at adfærd bestemmes af hvilke metoder et objekt implementerer – ikke af hvilken klasse det nedarver fra.
+Dvs at Python ikke spørger “hvad er du?”, men “hvad kan du?”
+Duck typing: “If it behaves like a duck, it *is* a duck.”  
+
+Datamodellen er det interne regelsæt, der definerer, hvordan alle objekter i Python fungerer og interagerer med hinanden.
+
+Datamodellen beskriver blandt andet hvordan objekter, syntaks og protokoller fungerer i python.
+
+
+**Objekter i python**  
+I Python er alt et objekt: tal, funktioner, klasser, moduler, strings, lister osv.
+Datamodellen definerer objekters
+- struktur  
+- opførsel  
+- interaktion med Python syntaks  
+
+
+**Python syntaks**  
+Top-level syntaks:  
+Når vi bruger almindelig top-level syntaks som:
+
+-  `+` (operatorer)
+- `in` (tjekker for tilstedeværelse)
+- `[]` (indexing)
+- `for-loops`
+
+så bruger Python datamodellen til at kalde dunder-metoder som
+`__add__`, `__contains__`, `__getitem__` og `__iter__`.
+
+Built-in functions:  
+Derudover findes der en række built-in functions — funktioner man kan kalde uden at importere noget:
+- `len()`
+- `print()`
+- `type()`
+
+De er også integreret i datamodellen, fordi Python oversætter funktionskaldene til kald på objektets dunder-metoder, som `__len__`, `__str__` og `__class__`.
+
+**Klasser i Python**  
+En klasse i Python er en skabelon til at skabe objekter.  
+Klassen definerer objektets data og opførsel gennem attributter og metoder.  
+Man bruger dunder-metoder til at binde Python-syntaks (fx operatorer og funktioner) til klassens funktionalitet.  
+
+## Dunder-metoder 
+Dunder-metoder (double-underscore) definerer objektets opførsel i forskellige
+situationer i Python.
+
+Eksempler på dunder-metoder:
+- `__str__` → læsbar strengrepræsentation som bruges af print() og str() 
+- `__repr__` → debugging repræsentation
+- `__add__` → definerer hvordan objektet reagerer på `+`
+- `__len__` → returnerer objektet længde og bruges af `len(obj)`
+- `__contains__` → bruges ved udtrykket x `in` obj
+- `__getitem__` → bruges ved `obj[...]` og gør objektet indekserbart
+
+
+Når print(p) kaldes, får man som standard objektets type og hukommelsesadresse som output, hvis `__str__` ikke er defineret i klassen:
+
+class Person:
+	def __init__(self,name):
+		self.name = name
+
+p = Person("Josefine")
+print(p) 
+
+Det er fordi `print()` bruger `str()`, men hvis `__str__`-metoden ikke er implementeret, bruger Python objektets standard `__repr__`, som returnerer en streng med objektets type og hukommelsesadresse.
+
+Hvis vi tilføjer dunder-metoder kan vi få mere relevant information om personen:
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return f"Person({self.name})"
+
+    def __repr__(self):
+        return f"<Person name={self.name}>"
+
+p = Person("Josefine")
+print(p) #print(obj) kalder str(obj), str() bruger __str__ hvis den er defineret
+print(repr(p))
+
+
+## Operator Overloading – Arithmetic operators
+
+I Python kan vi definere hvordan objekter reagerer på operatorer som `+`, `-`,
+`*` osv.
+
+Det sker ved hjælp af dunder-metoder som:
+- `__add__`
+- `__sub__`
+- `__mul__`
+- `__radd__` (omvendt addition)
+- `__iadd__` (in-place `+=`)
+
+Eksempel:
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
+
+v1 = Vector(1, 2)
+v2 = Vector(3, 4)
+v1 + v2
+
+
+## Iterator-protokollen
+
+Iteration i Python fungerer gennem to dunder-metoder:
+
+- `__iter__`  → returnerer iteratoren (typisk `self`)
+- `__next__` → returnerer næste element eller `StopIteration`
+
+Det gør det muligt for objekter at fungere i f.eks.:
+- for loops  
+- list comprehensions  
+- map, filter, sum
+
+
+class Counter:
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current < self.limit:
+            self.current += 1
+            return self.current
+        raise StopIteration
+
+for number in Counter(3):
+    print(number)
+
+## Container-protokollen
+
+Container-protokollen er en del af Python’s datamodel og beskriver, hvordan et objekt kan opføre sig som en container — altså et objekt, der indeholder andre objekter, ligesom lister, tuples, sets og dicts.
+
+Container-adfærd i Python bygger primært på disse tre dunder-metoder:
+
+- `__len__` → bruges af `len(obj)`
+- `__getitem__` → bruges af `obj[index]`
+- `__contains__` → bruges af `x in obj`
+
+Når et objekt implementerer disse metoder, opfører det sig som en liste eller et array.
+
+class MyList:
+    def __init__(self, items):
+        self.items = items
+
+    def __len__(self):
+        return len(self.items)
+
+    def __getitem__(self, index):
+        return self.items[index]
+
+    def __contains__(self, value):
+        return value in self.items
+
+ml = MyList([1, 2, 3])
+
+print(len(ml))
+print(ml[1])
+print(2 in ml)
+
+
+## Konklusion
+
+Python's datamodel er fundamentet for:
+- hvordan objekter opfører sig
+- hvordan Python’s syntaks fungerer
+- hvordan klasser integreres med sproget
+- hvordan operatorer, loops, indexing og built-ins virker
+
+Datamodellen gør Python:
+- fleksibelt  
+- udvidbart  
+
