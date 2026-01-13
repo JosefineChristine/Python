@@ -2,7 +2,7 @@ Python eksamensnoter
 
 
 *** Dunder-methods ***
-Kaldes også magic methods (virker som om der sker noget magi i baggunden)
+Kaldes også magic methods (virker som om der sker noget magi i baggrunden)
 
 Dunder methods er allerede implementeret i indbyggede typer
 Python’s indbyggede typer som list, dict, str, int osv. har allerede dunder methods implementeret.
@@ -39,43 +39,59 @@ Python eksamen talepapir
 
 ******************
 Intro
-- objekter
-- protokolorienteret (Pythons datamodel er protokolorienteret, det vil sige, at Python bruger protokoller til at afgøre, hvordan et objekt opfører sig i forskellige sammenhænge.) - typer er IKKE vigtige
-- dunder metoder (magic methods - kan implementeres i klasser og er implementeret i indbyggede typer (fx list)
-- top level syntaks (syntaktisk sukker)
-- built in funktions  (indbyggede funktioner. Her har python allerede defineret kaldt til dunder metoderne i nogen funktioner fx len() i list)
+Objekter
 
-- klasser 	(Fordel ved at bruge egne klasser: Ved at definere et objekt kan man begrænse og styre adfærden til præcis det, man har brug for.)
-- EKSEMPEL		(forklare hvad print() gør i det forskellige
+Protokolorienteret: 
+Pythons datamodel er protokolorienteret, det vil sige, at Python bruger protokoller til at afgøre, hvordan et objekt opfører sig i forskellige sammenhænge.
+Typer er IKKE vigtige
+
+Dunder metoder 
+magic methods 
+kan implementeres i klasser og er implementeret i indbyggede typer (fx list)
+
+Top level syntaks (syntaktisk sukker)
+
+Built in funktions  (indbyggede funktioner. Her har python allerede defineret kaldt til dunder metoderne i nogen funktioner fx len() i list)
+
+Klasser 	
+Fordel ved at bruge egne klasser: Ved at definere et objekt kan man begrænse og styre adfærden til præcis det, man har brug for.
+
+EKSEMPEL		
+Forklare hvad print() gør i det forskellige
 
 
 
 ******************
 Operator overloading
-- hvad det er
-- EKSEMPEL		
+Hvad det er
+
+EKSEMPEL		
+
 Ved at implementere __add__ kan jeg selv definere, hvad + betyder for mine egne objekter.
 Operatorer er bare syntaktisk sukker oven på dunder-metoder.
 
 
 
 ******************
-
 Container-protokollen
-- hvad er det
-- Hvorfor er det smart	(Man kan lave et objekt, der opfører sig som en liste, men uden at være bundet til en faktisk liste – man får selv kontrol over objektets adfærd, for eksempel hvordan data gemmes)
-- dunder metoderne
-- EKSEMPEL
+Hvad er det
+
+Hvorfor er det smart:
+Man kan lave et objekt, der opfører sig som en liste, men uden at være bundet til en faktisk liste 
+Man får selv kontrol over objektets adfærd, for eksempel hvordan data gemmes
+
+Dunder metoderne
+
+EKSEMPEL
 Her har jeg lavet en klasse, der opfører sig som en container.
 
 
 
 ******************
-
 Iterator-protokollen
-- hvad er det
-- dunder metoderne
-- EKSEMPEL		
+Hvad er det
+Dunder metoderne
+EKSEMPEL		
 
 Når jeg bruger "for", kalder Python __iter__.
 Iteration i Python fungerer via iterator-protokollen, som består af __iter__ og __next__.
@@ -87,7 +103,6 @@ For-loops virker ens for alle objekter, der følger iterator-protokollen.
 
 
 ******************
-
 Konklusion
 
 
